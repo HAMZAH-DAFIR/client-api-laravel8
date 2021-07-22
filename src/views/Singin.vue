@@ -35,7 +35,7 @@
         },
         methods: {
             async singin() {
-                const response = await axios.post('http://127.0.0.1:8000/api/login', this.user);
+                const response = await axios.post('login', this.user);
                 console.log(response.data);
             }
         },
