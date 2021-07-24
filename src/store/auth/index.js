@@ -32,10 +32,8 @@ export default {
         },
         async attempt({ commit }, token) {
             try {
-                const response = await axios.get('profil', {
-                    headers: { 'Authorization': `bearer ${token}` }
-                })
                 commit('setToken', token);
+                const response = await axios.get('profil')
                 commit('setUser', response.data.user);
                 console.log(response.data.user);
             } catch (error) {
