@@ -3,7 +3,7 @@
     <div class="row">
         <div class="row col-md-6 mx-auto mt-3">
             <h1 class="text-center">Singin</h1>
-            <form @submit.prevent="singin()" >
+            <form @submit.prevent="submit()" >
                 <div class="form-group has-success">
                     <label class="form-label mt-4" for="inputValid">Email</label>
                     <input type="email" v-model="user.email" class="form-control is-valid" id="inputValid">
@@ -23,7 +23,7 @@
     
 </template>
 <script>
-    import axios from 'axios';
+    import {mapActions} from 'vuex'
     export default {
         data() {
             return {
@@ -34,9 +34,11 @@
             }
         },
         methods: {
-            async singin() {
-                const response = await axios.post('login', this.user);
-                console.log(response.data);
+            ...mapActions ({
+                "singin" : "auth/singin"
+            }),
+            submit() {
+                this.singin(this.user).then(() => this.$router.replace({ name: 'Dashbord' }));
             }
         },
     }
