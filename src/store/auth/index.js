@@ -14,7 +14,7 @@ export default {
         }
     },
     getters: {
-        authf(state) {
+        auth(state) {
             return state.token && state.user;
         },
         user(state) {
@@ -44,6 +44,12 @@ export default {
                 commit('setUser', null);
                 commit('setToken', null);
             }
+        },
+        singOut({ commit }) {
+            return axios.post('logout').then(() => {
+                commit('setUser', null);
+                commit('setToken', null);
+            })
         }
     },
     modules: {}
