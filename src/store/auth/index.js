@@ -30,14 +30,19 @@ export default {
                 console.log(error);
             }
         },
-        async attempt({ commit }, token) {
+        async attempt({ commit, state }, token) {
             try {
-                commit('setToken', token);
+                if (token) {
+                    commit('setToken', token);
+                }
+                if (!state.token) {
+                    return;
+                }
                 const response = await axios.get('profil')
                 commit('setUser', response.data.user);
-                console.log(response.data.user);
             } catch (error) {
-                console.error(error)
+                commit('setUser', null);
+                commit('setToken', null);
             }
         }
     },
