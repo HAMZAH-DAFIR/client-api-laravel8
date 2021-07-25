@@ -14,18 +14,18 @@
           </router-link>
         </li>
         <li class="nav-item">
-            <router-link v-if="authf" class="nav-link" :to="{ name : 'Dashbord' }">dashbord</router-link>
+            <router-link v-if="auth" class="nav-link" :to="{ name : 'Dashbord' }">dashbord</router-link>
         </li>
       </ul>
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-            <a class="nav-link" v-if="authf" herf="#">{{ user.name }}</a>
+            <a class="nav-link" v-if="auth" herf="#">{{ user.name }}</a>
         </li>
         <li class="nav-item">
-            <router-link v-if="!authf" class="nav-link" :to="{ name : 'Singin' }">Singin</router-link>
+            <router-link v-if="!auth" class="nav-link" :to="{ name : 'Singin' }">Singin</router-link>
         </li>
         <li class="nav-item">
-            <a v-if="authf" class="nav-link" href="#">Log out</a>
+            <a @click='logOut()' v-if="auth" class="nav-link" href="#">Log out</a>
         </li>
       </ul>
     </div>
@@ -33,13 +33,23 @@
 </nav>
 </template>
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 export default {
     computed: {
       ...mapGetters({
-        'authf': 'auth/authf',
+        'auth': 'auth/auth',
         'user': 'auth/user'
       })
+    },
+    methods: {
+      ...mapActions({
+        'singOut' : 'auth/singOut'
+      }),
+      logOut () {
+        this.singOut().then(() => {
+          this.$router.replace({ name: 'Singin' })
+        })
+      }
     }
 }
 </script>
