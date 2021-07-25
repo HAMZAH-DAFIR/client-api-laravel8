@@ -11,7 +11,12 @@ const routes = [{
     {
         path: '/dashbord',
         name: 'Dashbord',
-        component: Dashbord
+        component: Dashbord,
+        beforeEnter: (to, from, next) => {
+            console.log('to', to)
+            console.log('from', from)
+            console.log('next', next)
+        }
     },
     {
         path: '/singin',
